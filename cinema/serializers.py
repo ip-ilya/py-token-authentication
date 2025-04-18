@@ -91,6 +91,7 @@ class TicketSerializer(serializers.ModelSerializer):
             attrs["movie_session"],
             serializers.ValidationError
         )
+
         return data
 
     class Meta:
