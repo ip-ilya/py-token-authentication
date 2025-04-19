@@ -2,7 +2,6 @@ from datetime import datetime
 
 from django.db.models import F, Count
 from rest_framework import viewsets
-from rest_framework.authentication import TokenAuthentication
 from rest_framework.mixins import (
     ListModelMixin,
     CreateModelMixin,
@@ -26,7 +25,6 @@ from cinema.serializers import (
     OrderSerializer,
     OrderListSerializer,
 )
-from cinema.permissions import IsAdminOrIfAuthenticatedReadOnly
 
 
 class ListCreateViewSet(
@@ -40,22 +38,16 @@ class ListCreateViewSet(
 class GenreViewSet(ListCreateViewSet):
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
 class ActorViewSet(ListCreateViewSet):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
 class CinemaHallViewSet(ListCreateViewSet):
     queryset = CinemaHall.objects.all()
     serializer_class = CinemaHallSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
 class MovieViewSet(
@@ -64,8 +56,6 @@ class MovieViewSet(
 ):
     queryset = Movie.objects.prefetch_related("genres", "actors")
     serializer_class = MovieSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     @staticmethod
     def _params_to_ints(qs):
@@ -113,8 +103,6 @@ class MovieSessionViewSet(viewsets.ModelViewSet):
         )
     )
     serializer_class = MovieSessionSerializer
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_queryset(self):
         date = self.request.query_params.get("date")
@@ -152,8 +140,6 @@ class OrderViewSet(ListCreateViewSet):
     )
     serializer_class = OrderSerializer
     pagination_class = OrderPagination
-    authentication_classes = (TokenAuthentication,)
-    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_permissions(self):
         if self.action == "create":
