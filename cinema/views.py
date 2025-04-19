@@ -157,7 +157,7 @@ class OrderViewSet(ListCreateViewSet):
 
     def get_permissions(self):
         if self.action == "create":
-            return (IsAuthenticated(),)
+            return [IsAuthenticated()]
 
         return super().get_permissions()
 

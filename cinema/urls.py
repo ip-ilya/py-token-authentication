@@ -11,45 +11,16 @@ from cinema.views import (
 )
 
 router = routers.DefaultRouter()
-router.register("movie_sessions", MovieSessionViewSet)
-
-list_create_actions = {
-    "get": "list",
-    "post": "create"
-}
+router.register("movie_sessions", MovieSessionViewSet, basename="moviesession")
+router.register("genres", GenreViewSet, basename="genre")
+router.register("cinema_halls", CinemaHallViewSet, basename="cinemahall")
+router.register("actors", ActorViewSet, basename="actor")
+router.register("movies", MovieViewSet, basename="movie")
+router.register("genres", GenreViewSet, basename="genre")
+router.register("orders", OrderViewSet, basename="order")
 
 urlpatterns = [
-    path("", include(router.urls)),
-    path(
-        "genres/",
-        GenreViewSet.as_view(actions=list_create_actions),
-        name="genre-list"
-    ),
-    path(
-        "cinema_halls/",
-        CinemaHallViewSet.as_view(actions=list_create_actions),
-        name="cinemahall-list"
-    ),
-    path(
-        "actors/",
-        ActorViewSet.as_view(actions=list_create_actions),
-        name="actor-list"
-    ),
-    path(
-        "movies/",
-        MovieViewSet.as_view(actions=list_create_actions),
-        name="movie-list"
-    ),
-    path(
-        "movies/<int:pk>/",
-        MovieViewSet.as_view(actions={"get": "retrieve"}),
-        name="movie-detail"
-    ),
-    path(
-        "orders/",
-        OrderViewSet.as_view(actions=list_create_actions),
-        name="order-list"
-    )
+    path("", include(router.urls))
 
 ]
 
