@@ -34,7 +34,7 @@ class ListCreateViewSet(
     ListModelMixin,
     CreateModelMixin
 ):
-    ...
+    pass
 
 
 class GenreViewSet(ListCreateViewSet):
@@ -90,7 +90,6 @@ class MovieViewSet(
         if actors:
             actors_ids = self._params_to_ints(actors)
             queryset = queryset.filter(actors__id__in=actors_ids)
-
         return queryset.distinct()
 
     def get_serializer_class(self):
